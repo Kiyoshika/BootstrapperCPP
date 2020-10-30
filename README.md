@@ -23,6 +23,7 @@ int main() {
     std::cout << "Point estimate: " << ci[0] << std::endl;
     std::cout << "95\% confidence interval of mean: [" << ci[1] << ", " << ci[2] << "]" << std::endl;           
 
+    free(ci);
     return 0;
 }
 ```
