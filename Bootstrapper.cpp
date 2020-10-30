@@ -46,19 +46,23 @@ class Bootstrapper {
             double bootstrap_mean = mean(mean_arr, iter);
             std::sort(mean_arr, mean_arr+iter);
 
-            //2.5th percentile (approximation)
+            // 2.5th percentile (approximation)
             int lower_rank = round((2.5 / 100) * iter);
             double perc_lower = (mean_arr[lower_rank] + mean_arr[lower_rank+1]) / 2;
 
-            //97.5th percentile (approximation)
+            // 97.5th percentile (approximation)
             int upper_rank = round((97.5 / 100) * iter);
             double perc_upper = (mean_arr[upper_rank] + mean_arr[upper_rank+1]) / 2;
 
-            //95% confidence interval
+            // 95% confidence interval
             double *estimate_data = (double*)malloc(sizeof(double*) * 3);
             estimate_data[0] = bootstrap_mean;
             estimate_data[1] = perc_lower;
             estimate_data[2] = perc_upper;
+
+            // free memory
+            free(temp);
+            free(mean_arr);
 
             return estimate_data;
         }
@@ -76,5 +80,6 @@ int main() {
     std::cout << "Point estimate: " << ci[0] << std::endl;
     std::cout << "95\% confidence interval of mean: [" << ci[1] << ", " << ci[2] << "]" << std::endl;           
 
+    free(ci);
     return 0;
 }
